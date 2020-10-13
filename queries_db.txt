@@ -1,0 +1,37 @@
+1)
+SELECT *
+FROM `ospiti`
+WHERE `document_type` = "CI";
+
+2)
+SELECT *
+FROM `ospiti`
+WHERE `date_of_birth` >= "1988-01-01"
+
+3)
+SELECT *
+FROM `ospiti`
+WHERE YEAR(NOW()) - YEAR(`date_of_birth`) > 20;
+
+4)
+SELECT *
+FROM `ospiti`
+WHERE `name` LIKE "a%";
+
+5)
+SELECT COUNT(id) AS total_accepted
+FROM `pagamenti`
+WHERE `status` = "accepted";
+
+6)
+SELECT MAX(price) AS prezzo_massimo
+FROM `pagamenti`;
+
+7)
+SELECT *
+FROM `ospiti`
+WHERE `document_type` = "Driver License" AND YEAR (`date_of_birth`) = "1975";
+
+8)
+SELECT SUM(beds) AS totale_letti
+FROM `stanze`;
