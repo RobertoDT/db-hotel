@@ -11,8 +11,7 @@ WHERE `date_of_birth` >= "1988-01-01"
 3)
 SELECT *
 FROM `ospiti`
-WHERE YEAR(NOW()) - YEAR(`date_of_birth`) > 20;
-
+WHERE TIMESTAMPDIFF(YEAR, `date_of_birth`, NOW()) > 20;
 4)
 SELECT *
 FROM `ospiti`
