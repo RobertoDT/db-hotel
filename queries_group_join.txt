@@ -32,3 +32,6 @@ SELECT `ospite_id`, COUNT(`ospite_id`) AS `totale_prenotazioni`
 FROM `prenotazioni_has_ospiti`
 GROUP BY `ospite_id`
 ORDER BY COUNT(`ospite_id`) DESC LIMIT 2;
+
+
+6)Come si chiamano gli ospiti che hanno fatto più di due prenotazioni?
