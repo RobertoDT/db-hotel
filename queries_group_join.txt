@@ -23,7 +23,7 @@ GROUP BY `stanza_id`;
 
 SELECT COUNT(`id`) AS `totale_prenotazioni`, AVG(HOUR(`created_at`))
 FROM `prenotazioni`
-GROUP BY (HOUR(`created_at`))
+GROUP BY (HOUR(`created_at`));
 
 
 5)Quante prenotazioni ha fatto l’ospite che ha fatto più prenotazioni?
@@ -35,3 +35,60 @@ ORDER BY COUNT(`ospite_id`) DESC LIMIT 2;
 
 
 6)Come si chiamano gli ospiti che hanno fatto più di due prenotazioni?
+
+SELECT *
+FROM `prenotazioni_has_ospiti`
+INNER JOIN `ospiti`
+ON ospiti.id = prenotazioni_has_ospiti.ospite_id;
+
+
+7)Stampare tutti gli ospiti per ogni prenotazione
+
+SELECT * 
+FROM `prenotazioni_has_ospiti`
+INNER JOIN `ospiti`
+ON ospiti.id = prenotazioni_has_ospiti.ospite_id
+INNER JOIN `prenotazioni`
+ON prenotazioni.id = prenotazioni_has_ospiti.prenotazione_id;
+
+
+8)Stampare Nome, Cognome, Prezzo e Pagante per tutte le prenotazioni fatte a Maggio 2018
+
+SELECT ospiti.name, ospiti.lastname, pagamenti.price, paganti.name
+FROM `paganti`
+INNER JOIN `ospiti`
+ON ospiti.id = paganti.ospite_id
+INNER JOIN `pagamenti`
+ON paganti.id = pagamenti.pagante_id
+INNER JOIN `prenotazioni`
+ON prenotazioni.id = pagamenti.prenotazione_id
+WHERE MONTH(prenotazioni.created_at) = "05";
+
+
+9)Fai la somma di tutti i prezzi delle prenotazioni per le stanze del primo piano
+
+SELECT SUM(pagamenti.price)
+FROM `pagamenti`
+INNER JOIN `prenotazioni`
+ON prenotazioni.id = pagamenti.prenotazione_id
+INNER JOIN `stanze`
+ON stanze.id = prenotazioni.stanza_id
+WHERE stanze.floor = 1;
+
+
+10)Prendi i dati di fatturazione per la prenotazione con id=7
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
