@@ -1,13 +1,13 @@
 1)Conta gli ospiti raggruppandoli per anno di nascita
 
-SELECT COUNT(`id`), `date_of_birth`
+SELECT COUNT(`id`), YEAR(`date_of_birth`)
 FROM `ospiti`
-GROUP BY `date_of_birth`;
+GROUP BY YEAR(`date_of_birth`);
 
 
 2)Somma i prezzi dei pagamenti raggruppandoli per status
 
-SELECT SUM(`price`) AS `totale_stati`
+SELECT SUM(`price`) AS `totale_stati`, `status`
 FROM `pagamenti` 
 GROUP BY `status`;
 
@@ -36,10 +36,12 @@ ORDER BY COUNT(`ospite_id`) DESC LIMIT 2;
 
 6)Come si chiamano gli ospiti che hanno fatto più di due prenotazioni?
 
-SELECT *
+SELECT COUNT(prenotazioni_has_ospiti.ospite_id), ospiti.name
 FROM `prenotazioni_has_ospiti`
 INNER JOIN `ospiti`
 ON ospiti.id = prenotazioni_has_ospiti.ospite_id;
+GROUP BY (prenotazioni_has_ospiti.ospite_id)
+HAVING prenotazioni_has_ospiti.ospite_id > 2;
 
 
 7)Stampare tutti gli ospiti per ogni prenotazione
@@ -78,17 +80,21 @@ WHERE stanze.floor = 1;
 
 10)Prendi i dati di fatturazione per la prenotazione con id=7
 
+SELECT pagamenti.id, pagamenti.status, pagamenti.price, paganti.name, paganti.lastname, paganti.address
+FROM `pagamenti`
+INNER JOIN `prenotazioni`
+ON prenotazioni.id = pagamenti.prenotazione_id
+INNER JOIN `paganti`
+ON paganti.id = pagamenti.pagante_id
+WHERE prenotazioni.id = 7;
 
 
+11)Visualizzare le stanze non ancora prenotate
 
-
-
-
-
-
-
-
-
-
+SELECT * 
+FROM `stanze` 
+LEFT JOIN `prenotazioni`
+ON stanze.id = prenotazioni.stanza_id
+WHERE prenotazioni.stanza_id IS NULL;
 
 
